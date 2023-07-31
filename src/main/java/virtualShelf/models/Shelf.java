@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -13,15 +14,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "books")
-public class Books {
+@Table(name = "shelves")
+public class Shelf {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(name = "user_id")
+    private UUID userId;
     private String name;
-    private String author;
-    private String publisher;
-    private String genre;
-    private String language;
+    @OneToMany
+    @JoinColumn(name = "shelf_id")
+    private List<BookOnShelf> bookOneShelves;
 
 }

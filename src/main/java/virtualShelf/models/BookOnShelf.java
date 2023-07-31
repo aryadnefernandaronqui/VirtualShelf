@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import virtualShelf.enums.EStatus;
 
 import java.util.UUID;
 
@@ -13,13 +14,17 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "shelves")
-public class Shelves {
+@Table(name = "book_on_shelf")
+public class BookOnShelf {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(name = "user_id")
-    private UUID user_id;
-    private String name;
+    private boolean favorite;
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
+    @Column(name = "book_id")
+    private UUID bookId;
+    @Column(name = "shelf_id")
+    private UUID shelfId;
 
 }

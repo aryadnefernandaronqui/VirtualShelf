@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import virtualShelf.dtos.CreateShelf;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,4 +27,8 @@ public class Shelf {
     @JoinColumn(name = "shelf_id")
     private List<BookOnShelf> bookOneShelves;
 
+    public Shelf(CreateShelf newShelf, UUID userId) {
+        this.name = newShelf.name();
+        this.userId = userId;
+    }
 }

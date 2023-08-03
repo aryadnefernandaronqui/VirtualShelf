@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import virtualShelf.dtos.CreateShelf;
+import virtualShelf.dtos.GetBooks;
 import virtualShelf.enums.EStatus;
 
 import java.util.UUID;
@@ -26,5 +28,11 @@ public class BookOnShelf {
     private UUID bookId;
     @Column(name = "shelf_id")
     private UUID shelfId;
+
+    public BookOnShelf(GetBooks newBookonShelf) {
+        this.bookId = newBookonShelf.bookId();
+        this.shelfId = newBookonShelf.shelfId();
+
+    }
 
 }

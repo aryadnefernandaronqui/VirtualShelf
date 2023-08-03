@@ -1,4 +1,4 @@
 package virtualShelf.dtos;
 
-public record ResponseError(String message) {
+public record ResponseError(String field, String message) {
 }

@@ -10,6 +10,7 @@ import virtualShelf.dtos.ResponseError;
 import virtualShelf.dtos.UpdateBook;
 import virtualShelf.models.Book;
 import virtualShelf.repositories.BookRepository;
+import virtualShelf.repositories.UserRepository;
 
 import java.util.UUID;
 
@@ -18,6 +19,8 @@ import java.util.UUID;
 public class BookController {
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity getAll(){
@@ -29,12 +32,13 @@ public class BookController {
     @Transactional
     public ResponseEntity registerBook(@RequestBody @Valid RegisterBook newBook){
         if(bookRepository.existsByName(newBook.name())){
-            return ResponseEntity.ok().body(new ResponseError("Book title already exists."));
+            return ResponseEntity.ok().body(new ResponseError("books","Book title already exists."));
         }
 
-        var book = new Book((newBook));
-        bookRepository.save(book);
-        return ResponseEntity.ok().body(newBook);
+        var book = bookRepository.save(new Book((newBook)));
+        return ResponseEntity.ok().body(book);
+
+
     }
 
     @PutMapping("/{bookId}")
@@ -45,14 +49,24 @@ public class BookController {
         var optionalBook = bookRepository.findById(bookId);
 
         if(optionalBook == null){
-            return ResponseEntity.ok().body(new ResponseError("Book not registered"));
+            return ResponseEntity.ok().body(new ResponseError("books","Book not registered"));
         }
 
         var book = optionalBook.get();
         book.updateBook(updatedBook);
 
-        return ResponseEntity.ok().body(updatedBook);
+        return ResponseEntity.ok().body(book);
     }
 
+    @DeleteMapping("/{bookId}")
+    public ResponseEntity deleteBook(@PathVariable UUID bookId){
+        var book = bookRepository.findById(bookId);
 
+        if(book.isEmpty()){
+            ResponseEntity.badRequest().body(new ResponseError("user/books", "Book not found."));
+        }
+
+        bookRepository.deleteById(bookId);
+        return  ResponseEntity.noContent().build();
+    }
 }

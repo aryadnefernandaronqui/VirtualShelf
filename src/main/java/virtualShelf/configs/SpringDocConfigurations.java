@@ -12,11 +12,13 @@ public class SpringDocConfigurations {
     public OpenAPI customOpenAPI(){
         return new OpenAPI()
                 .info(new Info()
-                        .title("Hunter Vagas API")
-                        .description("API para o sistema de vagas hunter")
-                        .summary("Alguma coisa deve aparecer em algum lugar")
+                        .title("Virtual Shelf API")
+                        .description("A Virtual Shelf API where you can register books and your own shelves")
+                        .summary("Here you can create an user, make login, register a book and your shelves. " +
+                                "Choose already registered books to put on the shelves that you created. Each user," +
+                                "book, shelf and book on shelf has your own id." )
                         .contact(new Contact()
-                                .name("Édson Martins")
-                                .email("edson.martins@growdev.com.br")));
+                                .name("Aryadne Fernanda Ronqui")
+                                .email("aryadne.fernanda@gmail.com")));
     }
 }

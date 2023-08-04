@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import virtualShelf.dtos.CreateShelf;
 import virtualShelf.dtos.GetBooks;
+import virtualShelf.dtos.UpdateBookOnShelf;
 import virtualShelf.enums.EStatus;
 
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class BookOnShelf {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private boolean favorite;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private EStatus status;
     @Column(name = "book_id")
     private UUID bookId;
@@ -32,7 +33,17 @@ public class BookOnShelf {
     public BookOnShelf(GetBooks newBookonShelf) {
         this.bookId = newBookonShelf.bookId();
         this.shelfId = newBookonShelf.shelfId();
+        this.status = EStatus.WANT_TO_READ;
+        this.favorite = false;
+    }
 
+    public void updateBookOnShelf(UpdateBookOnShelf updatedBook){
+        if(updatedBook.favorite() != null){
+            favorite = updatedBook.favorite();
+        }
+        if(updatedBook.status() != null){
+            status = updatedBook.status();
+        }
     }
 
 }
